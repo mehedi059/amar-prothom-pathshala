@@ -1,459 +1,127 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() => runApp(const PathshalaApp());
 
 class PathshalaApp extends StatelessWidget {
   const PathshalaApp({super.key});
-
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'আমার প্রথম পাঠশালা',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF5C8D45)),
-        scaffoldBackgroundColor: const Color(0xFFFFF9EE),
-        fontFamily: 'Roboto',
-      ),
-      home: const HomeScreen(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'আমার প্রথম পাঠশালা',
+    theme: ThemeData(useMaterial3: true, fontFamily: 'NotoSansBengali', colorSchemeSeed: const Color(0xffef9f45), scaffoldBackgroundColor: const Color(0xfffffbf1)),
+    home: const HomePage(),
+  );
 }
 
 class Lesson {
-  final String title;
-  final String subtitle;
-  final String symbol;
-  final Color color;
-  final String language;
-  final String? audio;
-  final String? rhyme;
-
-  const Lesson({
-    required this.title,
-    required this.subtitle,
-    required this.symbol,
-    required this.color,
-    required this.language,
-    this.audio,
-    this.rhyme,
-  });
+  final String letter, word, emoji, audio;
+  const Lesson(this.letter, this.word, this.emoji, this.audio);
 }
-
-class Subject {
-  final String title;
-  final String subtitle;
-  final String emoji;
-  final Color color;
-  final List<Lesson> lessons;
-
-  const Subject(this.title, this.subtitle, this.emoji, this.color, this.lessons);
-}
-
-final subjects = <Subject>[
-  Subject('বাংলা বর্ণমালা', 'স্বরবর্ণ, ব্যঞ্জনবর্ণ ও শব্দ', 'অ', const Color(0xFFFFE0B2), const [
-    Lesson(title: 'অ', subtitle: 'অজগর', symbol: '🐍', color: Color(0xFFFFE0B2), language: 'bn', audio: 'bn/অ.mp3', rhyme: 'অ-তে অজগর, লম্বা তার গা,\\nবনের পথে চলে সে, ধীরে ধীরে বা।'),
-    Lesson(title: 'আ', subtitle: 'আম', symbol: '🥭', color: Color(0xFFFFF0B3), language: 'bn', audio: 'bn/আ.mp3', rhyme: 'আ-তে আম, মিষ্টি তার ঘ্রাণ,\\nগ্রীষ্মকালে খেতে লাগে, ভীষণ মজার টান।'),
-    Lesson(title: 'ই', subtitle: 'ইঁদুর', symbol: '🐭', color: Color(0xFFE1F5FE), language: 'bn', audio: 'bn/ই.mp3', rhyme: 'ই-তে ইঁদুর ছোট্ট ভাই,\\nদৌড়ে বেড়ায় এদিক-ওদিক তাই।'),
-    Lesson(title: 'ঈ', subtitle: 'ঈগল', symbol: '🦅', color: Color(0xFFE8EAF6), language: 'bn', audio: 'bn/ঈ.mp3'),
-    Lesson(title: 'উ', subtitle: 'উট', symbol: '🐪', color: Color(0xFFFFE0B2), language: 'bn', audio: 'bn/উ.mp3'),
-    Lesson(title: 'ঊ', subtitle: 'ঊষা', symbol: '🌅', color: Color(0xFFFFF9C4), language: 'bn', audio: 'bn/ঊ.mp3'),
-    Lesson(title: 'ক', subtitle: 'কলা', symbol: '🍌', color: Color(0xFFFFF9C4), language: 'bn', audio: 'bn/ক.mp3', rhyme: 'ক-তে কলা, হলুদ তার রং,\\nখেতে মজা, শক্তি দেয় ঢং।'),
-    Lesson(title: 'খ', subtitle: 'খরগোশ', symbol: '🐰', color: Color(0xFFF3E5F5), language: 'bn', audio: 'bn/খ.mp3'),
-    Lesson(title: 'গ', subtitle: 'গরু', symbol: '🐄', color: Color(0xFFE8F5E9), language: 'bn', audio: 'bn/গ.mp3'),
-    Lesson(title: 'ঘ', subtitle: 'ঘড়ি', symbol: '⏰', color: Color(0xFFE0F7FA), language: 'bn', audio: 'bn/ঘ.mp3'),
-  ]),
-  Subject('English Alphabet', 'Letters, words and sounds', 'A', const Color(0xFFDDEBFF), const [
-    Lesson(title: 'A a', subtitle: 'Apple', symbol: '🍎', color: Color(0xFFFFE0E0), language: 'en', audio: 'en/a.mp3', rhyme: 'A for Apple, red and sweet,\\nA lovely fruit for us to eat.'),
-    Lesson(title: 'B b', subtitle: 'Ball', symbol: '⚽', color: Color(0xFFE3F2FD), language: 'en', audio: 'en/b.mp3'),
-    Lesson(title: 'C c', subtitle: 'Cat', symbol: '🐱', color: Color(0xFFFFF3E0), language: 'en', audio: 'en/c.mp3'),
-    Lesson(title: 'D d', subtitle: 'Duck', symbol: '🦆', color: Color(0xFFE8F5E9), language: 'en', audio: 'en/d.mp3'),
-    Lesson(title: 'E e', subtitle: 'Elephant', symbol: '🐘', color: Color(0xFFF3E5F5), language: 'en', audio: 'en/e.mp3'),
-  ]),
-  Subject('প্রাথমিক গণিত', 'সংখ্যা, যোগ-বিয়োগ ও আকৃতি', '🔢', const Color(0xFFE1F5E8), const [
-    Lesson(title: '১', subtitle: 'একটি আপেল', symbol: '🍎', color: Color(0xFFFFE0E0), language: 'bn', rhyme: 'একটি আপেল, লাল টুকটুকে,\\nগুনতে শিখি মজা করে।'),
-    Lesson(title: '২', subtitle: 'দুটি প্রজাপতি', symbol: '🦋🦋', color: Color(0xFFEDE7F6), language: 'bn'),
-    Lesson(title: '৩', subtitle: 'তিনটি বল', symbol: '⚽⚽⚽', color: Color(0xFFE3F2FD), language: 'bn'),
-    Lesson(title: 'বৃত্ত', subtitle: 'গোল আকৃতি', symbol: '🔴', color: Color(0xFFFFEBEE), language: 'bn'),
-    Lesson(title: 'ত্রিভুজ', subtitle: 'তিন কোণা', symbol: '🔺', color: Color(0xFFFFF3E0), language: 'bn'),
-  ]),
-  Subject('আরবি শিক্ষা', 'আরবি হরফ ও সহজ শব্দ', 'ا', const Color(0xFFE5DDF7), const [
-    Lesson(title: 'ا', subtitle: 'আলিফ', symbol: '🌙', color: Color(0xFFEDE7F6), language: 'ar', audio: 'ar/alif.mp3'),
-    Lesson(title: 'ب', subtitle: 'বা', symbol: '📘', color: Color(0xFFE3F2FD), language: 'ar', audio: 'ar/ba.mp3'),
-    Lesson(title: 'ت', subtitle: 'তা', symbol: '🌴', color: Color(0xFFE8F5E9), language: 'ar', audio: 'ar/ta.mp3'),
-    Lesson(title: 'ث', subtitle: 'ছা', symbol: '⭐', color: Color(0xFFFFF3E0), language: 'ar', audio: 'ar/tha.mp3'),
-  ]),
-  Subject('ছবি দেখে শিখি', 'ফল, প্রাণী, রং ও যানবাহন', '🧸', const Color(0xFFFFE6EF), const [
-    Lesson(title: 'ফলমূল', subtitle: 'আম, কলা, আপেল', symbol: '🥭🍌🍎', color: Color(0xFFFFF3E0), language: 'bn'),
-    Lesson(title: 'প্রাণী', subtitle: 'বাঘ, হাতি, সিংহ', symbol: '🐯🐘🦁', color: Color(0xFFE8F5E9), language: 'bn'),
-    Lesson(title: 'যানবাহন', subtitle: 'বাস, ট্রেন, নৌকা', symbol: '🚌🚂🚤', color: Color(0xFFE3F2FD), language: 'bn'),
-    Lesson(title: 'রং', subtitle: 'লাল, নীল, হলুদ', symbol: '🎨', color: Color(0xFFF3E5F5), language: 'bn'),
-  ]),
-  Subject('ছড়া ও গান', 'বাংলা ছড়া ও ইংরেজি রাইম', '🎵', const Color(0xFFFFF0C9), const [
-    Lesson(title: 'আয় আয় চাঁদ মামা', subtitle: 'বাংলা ছড়া', symbol: '🌙', color: Color(0xFFEDE7F6), language: 'bn'),
-    Lesson(title: 'Twinkle Twinkle', subtitle: 'English rhyme', symbol: '⭐', color: Color(0xFFE3F2FD), language: 'en'),
-    Lesson(title: 'নতুন ছড়া', subtitle: 'মৌলিক শিশুতোষ ছড়া', symbol: '🎼', color: Color(0xFFFFF3E0), language: 'bn'),
-  ]),
-  Subject('ইসলামিক শিক্ষা', 'দোয়া, আদব ও ভালো অভ্যাস', '🕌', const Color(0xFFDDF3E6), const [
-    Lesson(title: 'বিসমিল্লাহ', subtitle: 'কাজের শুরুতে', symbol: '🌿', color: Color(0xFFE8F5E9), language: 'ar'),
-    Lesson(title: 'সালাম', subtitle: 'আসসালামু আলাইকুম', symbol: '🤝', color: Color(0xFFE3F2FD), language: 'bn'),
-    Lesson(title: 'ছোট্ট দোয়া', subtitle: 'সহজে শেখার দোয়া', symbol: '🤲', color: Color(0xFFEDE7F6), language: 'ar'),
-  ]),
+const vowels = <Lesson>[
+  Lesson('অ','অজগর','🐍','bn/অজগর.mp3'), Lesson('আ','আম','🥭','bn/আম.mp3'),
+  Lesson('ই','ইঁদুর','🐭','bn/ইঁদুর.mp3'), Lesson('ঈ','ঈগল','🦅','bn/ঈগল.mp3'),
+  Lesson('উ','উট','🐪','bn/উট.mp3'), Lesson('ঊ','ঊষা','🌅','bn/ঊষা.mp3'),
+  Lesson('ঋ','ঋষি','🧘','bn/ঋষি.mp3'), Lesson('এ','একতারা','🎸','bn/একতারা.mp3'),
+  Lesson('ঐ','ঐরাবত','🐘','bn/ঐরাবত.mp3'), Lesson('ও','ওল','🍠','bn/ওল.mp3'),
+  Lesson('ঔ','ঔষধ','💊','bn/ঔষধ.mp3'),
 ];
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFFFF9EE),
-        title: const Text('আমার প্রথম পাঠশালা', style: TextStyle(fontWeight: FontWeight.w800)),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            tooltip: 'আমাদের সম্পর্কে',
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const AboutScreen()),
-            ),
-            icon: const Icon(Icons.info_outline_rounded),
-          ),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-        children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: [Color(0xFFFFD98A), Color(0xFFFFEFC9)]),
-              borderRadius: BorderRadius.circular(26),
-            ),
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('🌈  শেখার মজার জগতে স্বাগতম!', style: TextStyle(fontSize: 21, fontWeight: FontWeight.w900)),
-                SizedBox(height: 8),
-                Text('খেলতে খেলতে শিখি, আনন্দে বড় হই।', style: TextStyle(fontSize: 16)),
-                SizedBox(height: 10),
-                Text('৩–৬ বছর • বাংলা • English • গণিত • আরবি', style: TextStyle(fontWeight: FontWeight.w600)),
-              ],
-            ),
-          ),
-          const SizedBox(height: 22),
-          const Text('📚  তোমার বইগুলো', style: TextStyle(fontSize: 21, fontWeight: FontWeight.w900)),
-          const SizedBox(height: 12),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: subjects.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 1.15,
-            ),
-            itemBuilder: (context, index) {
-              final subject = subjects[index];
-              return InkWell(
-                borderRadius: BorderRadius.circular(22),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubjectScreen(subject: subject))),
-                child: Ink(
-                  decoration: BoxDecoration(color: subject.color, borderRadius: BorderRadius.circular(22)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(14),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(subject.emoji, style: const TextStyle(fontSize: 35)),
-                        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text(subject.title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
-                          const SizedBox(height: 3),
-                          Text(subject.subtitle, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11)),
-                        ]),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 18),
-          const Center(child: Text('প্রতিদিন একটু একটু করে শিখি ❤️', style: TextStyle(color: Colors.black54))),
-        ],
-      ),
-    );
-  }
-}
-
-class SubjectScreen extends StatelessWidget {
-  final Subject subject;
-  const SubjectScreen({super.key, required this.subject});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(subject.title)),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        itemCount: subject.lessons.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 10),
-        itemBuilder: (context, index) {
-          final lesson = subject.lessons[index];
-          return Card(
-            color: lesson.color,
-            elevation: 0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-            child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              leading: CircleAvatar(
-                radius: 27, backgroundColor: Colors.white,
-                child: Text(lesson.symbol, style: const TextStyle(fontSize: 25)),
-              ),
-              title: Text(lesson.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
-              subtitle: Text(lesson.subtitle),
-              trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 18),
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LessonScreen(lesson: lesson))),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class LessonScreen extends StatefulWidget {
-  final Lesson lesson;
-  const LessonScreen({super.key, required this.lesson});
-
-  @override
-  State<LessonScreen> createState() => _LessonScreenState();
-}
-
-class _LessonScreenState extends State<LessonScreen> {
-  final AudioPlayer _player = AudioPlayer();
-  bool _playing = false;
-  String _audioMessage = 'অডিও রেকর্ডিং যুক্ত হলে এখানে শুনতে পারবে।';
-
-  Future<void> _playAudio() async {
-    final path = widget.lesson.audio;
-    if (path == null) {
-      setState(() => _audioMessage = 'এই পাঠের অডিও এখনো যোগ করা হয়নি।');
-      return;
-    }
-    try {
-      await _player.stop();
-      await _player.play(AssetSource('audio/$path'));
-      setState(() {
-        _playing = true;
-        _audioMessage = 'শুনছি...';
-      });
-    } catch (_) {
-      setState(() {
-        _playing = false;
-        _audioMessage = 'রেকর্ড করা অডিও ফাইল পাওয়া যায়নি। assets/audio ফোল্ডারে MP3 যোগ করতে হবে।';
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _player.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final lesson = widget.lesson;
-    return Scaffold(
-      appBar: AppBar(title: const Text('শিখি ও শুনি')),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const SizedBox(height: 12),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(color: lesson.color, borderRadius: BorderRadius.circular(30)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(lesson.title, style: const TextStyle(fontSize: 76, fontWeight: FontWeight.w900)),
-                    const SizedBox(height: 16),
-                    Text(lesson.symbol, style: const TextStyle(fontSize: 100)),
-                    const SizedBox(height: 12),
-                    Text(lesson.subtitle, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w800)),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 18),
-            if (lesson.rhyme != null)
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)),
-                child: Text(lesson.rhyme!.replaceAll(r'\n', '\n'),
-                    textAlign: TextAlign.center, style: const TextStyle(fontSize: 18, height: 1.7)),
-              ),
-            const SizedBox(height: 14),
-            SizedBox(
-              width: double.infinity, height: 58,
-              child: FilledButton.icon(
-                onPressed: _playAudio,
-                icon: Icon(_playing ? Icons.volume_up_rounded : Icons.play_circle_fill_rounded, size: 27),
-                label: const Text('শুনে শিখি', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(_audioMessage, textAlign: TextAlign.center, style: const TextStyle(color: Colors.black54, fontSize: 12)),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-class AboutScreen extends StatelessWidget {
-  const AboutScreen({super.key});
-
-  static final Uri _github = Uri.parse('https://github.com/mehedi059');
-  static final Uri _facebook = Uri.parse('https://facebook.com/mehedi.am');
-
-  Future<void> _openLink(BuildContext context, Uri uri) async {
-    try {
-      final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
-      if (!opened && context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('লিংকটি খোলা যায়নি।')),
-        );
-      }
-    } catch (_) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('লিংকটি খোলা যায়নি।')),
-        );
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('আমাদের সম্পর্কে')),
-      body: ListView(
-        padding: const EdgeInsets.all(20),
-        children: [
-          Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFFD98A), Color(0xFFFFEFC9)],
-              ),
-              borderRadius: BorderRadius.circular(26),
-            ),
-            child: const Column(
-              children: [
-                CircleAvatar(
-                  radius: 38,
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.menu_book_rounded, size: 42, color: Color(0xFF5C8D45)),
-                ),
-                SizedBox(height: 14),
-                Text(
-                  'আমার প্রথম পাঠশালা',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
-                ),
-                SizedBox(height: 4),
-                Text('My First Learning Book', style: TextStyle(fontSize: 14)),
-                SizedBox(height: 12),
-                Text(
-                  'খেলতে খেলতে শিখি, আনন্দে বড় হই।',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-          const Text('ডেভেলপার পরিচিতি', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
-          const SizedBox(height: 12),
-          Card(
-            elevation: 0,
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(18),
-              child: Column(
-                children: [
-                  const CircleAvatar(
-                    radius: 34,
-                    backgroundColor: Color(0xFFE8F5E9),
-                    child: Icon(Icons.person_rounded, size: 38, color: Color(0xFF39804A)),
-                  ),
-                  const SizedBox(height: 12),
-                  const Text(
-                    'মো: মেহেদী হাসান',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 21, fontWeight: FontWeight.w900),
-                  ),
-                  const Text('Developer & Creator', style: TextStyle(color: Colors.black54)),
-                  const SizedBox(height: 18),
-                  ListTile(
-                    leading: const Icon(Icons.code_rounded),
-                    title: const Text('GitHub'),
-                    subtitle: const Text('github.com/mehedi059'),
-                    trailing: const Icon(Icons.open_in_new_rounded, size: 18),
-                    onTap: () => _openLink(context, _github),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.facebook_rounded, color: Color(0xFF1877F2)),
-                    title: const Text('Facebook'),
-                    subtitle: const Text('facebook.com/mehedi.am'),
-                    trailing: const Icon(Icons.open_in_new_rounded, size: 18),
-                    onTap: () => _openLink(context, _facebook),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 18),
-          const Card(
-            elevation: 0,
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('অ্যাপ সম্পর্কে', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
-                  SizedBox(height: 8),
-                  Text(
-                    '৩–৬ বছর বয়সী শিশুদের জন্য বাংলা, ইংরেজি, গণিত, আরবি, ছবি, ছড়া ও প্রাথমিক শিক্ষার একটি আনন্দময় অফলাইন শেখার উদ্যোগ।',
-                    style: TextStyle(height: 1.6),
-                  ),
-                  SizedBox(height: 12),
-                  Text('সংস্করণ: 1.0.0'),
-                  Text('লাইসেন্স: MIT License'),
-                  SizedBox(height: 12),
-                  Text(
-                    '© 2026 Mo: Mehedi Hasan. MIT License অনুযায়ী সোর্স কোড ব্যবহারের শর্ত README ও LICENSE ফাইলে দেওয়া আছে।',
-                    style: TextStyle(fontSize: 12, color: Colors.black54, height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          const Center(child: Text('শিশুদের শেখার আনন্দময় সঙ্গী ❤️', style: TextStyle(color: Colors.black54))),
-        ],
-      ),
-    );
-  }
+const consonants = <Lesson>[
+  Lesson('ক','কলম','✏️','bn/কলম.mp3'), Lesson('খ','খরগোশ','🐇','bn/খরগোশ.mp3'),
+  Lesson('গ','গরু','🐄','bn/গরু.mp3'), Lesson('ঘ','ঘড়ি','🕒','bn/ঘড়ি.mp3'),
+  Lesson('ঙ','ব্যাঙ','🐸','bn/ব্যাঙ.mp3'), Lesson('চ','চাঁদ','🌙','bn/চাঁদ.mp3'),
+  Lesson('ছ','ছাতা','☂️','bn/ছাতা.mp3'), Lesson('জ','জাহাজ','🚢','bn/জাহাজ.mp3'),
+  Lesson('ঝ','ঝুড়ি','🧺','bn/ঝুড়ি.mp3'), Lesson('ঞ','জ্ঞান','📚','bn/জ্ঞান.mp3'),
+  Lesson('ট','টমেটো','🍅','bn/টমেটো.mp3'), Lesson('ঠ','ঠেলাগাড়ি','🛒','bn/ঠেলাগাড়ি.mp3'),
+  Lesson('ড','ডাব','🥥','bn/ডাব.mp3'), Lesson('ঢ','ঢোল','🥁','bn/ঢোল.mp3'),
+  Lesson('ণ','হরিণ','🦌','bn/হরিণ.mp3'), Lesson('ত','তরমুজ','🍉','bn/তরমুজ.mp3'),
+  Lesson('থ','থালা','🍽️','bn/থালা.mp3'), Lesson('দ','দোয়েল','🐦','bn/দোয়েল.mp3'),
+  Lesson('ধ','ধান','🌾','bn/ধান.mp3'), Lesson('ন','নৌকা','🛶','bn/নৌকা.mp3'),
+  Lesson('প','পাখি','🐦','bn/পাখি.mp3'), Lesson('ফ','ফুল','🌼','bn/ফুল.mp3'),
+  Lesson('ব','বই','📖','bn/বই.mp3'), Lesson('ভ','ভালুক','🐻','bn/ভালুক.mp3'),
+  Lesson('ম','মাছ','🐟','bn/মাছ.mp3'), Lesson('য','যন্ত্র','⚙️','bn/যন্ত্র.mp3'),
+  Lesson('র','রথ','🛺','bn/রথ.mp3'), Lesson('ল','লিচু','🍒','bn/লিচু.mp3'),
+  Lesson('শ','শাপলা','🪷','bn/শাপলা.mp3'), Lesson('ষ','ষাঁড়','🐂','bn/ষাঁড়.mp3'),
+  Lesson('স','সাপ','🐍','bn/সাপ.mp3'), Lesson('হ','হাতি','🐘','bn/হাতি.mp3'),
+  Lesson('ড়','ঘোড়া','🐎','bn/ঘোড়া.mp3'), Lesson('ঢ়','আষাঢ়','🌧️','bn/আষাঢ়.mp3'),
+  Lesson('য়','ময়ূর','🦚','bn/ময়ূর.mp3'), Lesson('ৎ','উৎসব','🎉','bn/উৎসব.mp3'),
+  Lesson('ং','রং','🎨','bn/রং.mp3'), Lesson('ঃ','দুঃখ','😢','bn/দুঃখ.mp3'),
+  Lesson('ঁ','চাঁদ','🌙','bn/চাঁদ.mp3'),
+];
+const english = <Lesson>[
+  Lesson('A','Apple','🍎','en/A.mp3'),Lesson('B','Ball','⚽','en/B.mp3'),Lesson('C','Cat','🐱','en/C.mp3'),
+  Lesson('D','Dog','🐶','en/D.mp3'),Lesson('E','Elephant','🐘','en/E.mp3'),Lesson('F','Fish','🐟','en/F.mp3'),
+  Lesson('G','Goat','🐐','en/G.mp3'),Lesson('H','Hen','🐔','en/H.mp3'),Lesson('I','Ice cream','🍦','en/I.mp3'),
+  Lesson('J','Jug','🏺','en/J.mp3'),Lesson('K','Kite','🪁','en/K.mp3'),Lesson('L','Lion','🦁','en/L.mp3'),
+  Lesson('M','Mango','🥭','en/M.mp3'),Lesson('N','Nest','🪺','en/N.mp3'),Lesson('O','Orange','🍊','en/O.mp3'),
+  Lesson('P','Parrot','🦜','en/P.mp3'),Lesson('Q','Queen','👑','en/Q.mp3'),Lesson('R','Rabbit','🐇','en/R.mp3'),
+  Lesson('S','Sun','☀️','en/S.mp3'),Lesson('T','Tiger','🐅','en/T.mp3'),Lesson('U','Umbrella','☂️','en/U.mp3'),
+  Lesson('V','Van','🚐','en/V.mp3'),Lesson('W','Watch','⌚','en/W.mp3'),Lesson('X','Xylophone','🎼','en/X.mp3'),
+  Lesson('Y','Yak','🐂','en/Y.mp3'),Lesson('Z','Zebra','🦓','en/Z.mp3'),
+];
+const arabic = <Lesson>[
+  Lesson('ا','আলিফ','🌙','ar/alif.mp3'),Lesson('ب','বা','📘','ar/ba.mp3'),Lesson('ت','তা','🌷','ar/ta.mp3'),
+  Lesson('ث','ছা','⭐','ar/tha.mp3'),Lesson('ج','জীম','🐪','ar/jeem.mp3'),Lesson('ح','হা','🌿','ar/ha.mp3'),
+  Lesson('خ','খা','🍞','ar/kha.mp3'),Lesson('د','দাল','🚪','ar/dal.mp3'),Lesson('ذ','যাল','🌽','ar/thal.mp3'),
+  Lesson('ر','রা','🌹','ar/ra.mp3'),Lesson('ز','যাই','🦓','ar/zay.mp3'),Lesson('س','সীন','🐟','ar/seen.mp3'),
+  Lesson('ش','শীন','☀️','ar/sheen.mp3'),Lesson('ص','সাদ','🦅','ar/sad.mp3'),Lesson('ض','দাদ','🐸','ar/dad.mp3'),
+  Lesson('ط','ত্বা','✈️','ar/ta2.mp3'),Lesson('ظ','য্বা','🌳','ar/za2.mp3'),Lesson('ع','আইন','👁️','ar/ain.mp3'),
+  Lesson('غ','গইন','☁️','ar/ghain.mp3'),Lesson('ف','ফা','🐘','ar/fa.mp3'),Lesson('ق','ক্বফ','🌙','ar/qaf.mp3'),
+  Lesson('ك','কাফ','📖','ar/kaf.mp3'),Lesson('ل','লাম','🍋','ar/lam.mp3'),Lesson('م','মীম','💧','ar/meem.mp3'),
+  Lesson('ن','নূন','🐝','ar/noon.mp3'),Lesson('ه','হা','🎁','ar/ha2.mp3'),Lesson('و','ওয়াও','🌹','ar/waw.mp3'),Lesson('ي','ইয়া','✋','ar/ya.mp3'),
+];
+const rhymes = <Map<String,String>>[
+ {'title':'আয় আয় চাঁদ মামা','type':'ছড়া','text':'আয় আয় চাঁদ মামা\\nটিপ দিয়ে যা\\nচাঁদের কপালে চাঁদ\\nটিপ দিয়ে যা।'},
+ {'title':'হাট্টিমাটিম টিম','type':'ছড়া','text':'হাট্টিমাটিম টিম\\nতারা মাঠে পাড়ে ডিম\\nতাদের খাড়া দুটো শিং\\nতারা হাট্টিমাটিম টিম।'},
+ {'title':'খোকন খোকন ডাক পাড়ি','type':'কবিতা','text':'খোকন খোকন ডাক পাড়ি\\nখোকন মোদের কার বাড়ি\\nআয়রে খোকন ঘরে আয়\\nমায়ের কোলে বসে খায়।'},
+ {'title':'প্রজাপতি প্রজাপতি','type':'কবিতা','text':'প্রজাপতি প্রজাপতি\\nপাখনা মেলে উড়ে যাস\\nফুলের বনে রঙ ছড়িয়ে\\nআনন্দে তুই ফিরে আস।'},
+ {'title':'সকাল হলো','type':'গান','text':'সকাল হলো, দিন হলো\\nসূর্য ওঠে হাসে\\nপাখিরা সব গান গায়\\nসবুজ ঘাসের পাশে।'},
+];
+class HomePage extends StatefulWidget { const HomePage({super.key}); @override State<HomePage> createState()=>_HomePageState(); }
+class _HomePageState extends State<HomePage> {
+ int tab=0; final player=AudioPlayer(); String? playing;
+ final colors=[const Color(0xffffe0b5),const Color(0xfffff0a9),const Color(0xffddf1ff),const Color(0xffe8e3fa)];
+ Future<void> play(String path) async {
+   try { await player.stop(); await player.play(AssetSource('audio/$path')); setState(()=>playing=path); }
+   catch (_) { if(mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text('এই পাঠের রেকর্ড করা অডিও এখনো যোগ করা হয়নি।'))); }
+ }
+ @override void dispose(){player.dispose();super.dispose();}
+ @override Widget build(BuildContext context){
+  final pages=[_home(),_alphabet('বাংলা স্বরবর্ণ',vowels),_alphabet('বাংলা ব্যঞ্জনবর্ণ',consonants),_alphabet('English Alphabet',english),_alphabet('আরবি হরফ',arabic),_rhymes(),_about()];
+  return Scaffold(body:SafeArea(child:pages[tab]),bottomNavigationBar:NavigationBar(selectedIndex:tab>4? (tab==5?5:6):0,onDestinationSelected:(i)=>setState(()=>tab=i==0?0:i),destinations:const[
+   NavigationDestination(icon:Icon(Icons.home_rounded),label:'হোম'),
+   NavigationDestination(icon:Icon(Icons.abc),label:'বাংলা'),
+   NavigationDestination(icon:Icon(Icons.menu_book),label:'ব্যঞ্জন'),
+   NavigationDestination(icon:Icon(Icons.language),label:'English'),
+   NavigationDestination(icon:Icon(Icons.nightlight_round),label:'আরবি'),
+   NavigationDestination(icon:Icon(Icons.music_note),label:'ছড়া'),
+   NavigationDestination(icon:Icon(Icons.info_outline),label:'পরিচিতি'),
+  ]));
+ }
+ Widget _home()=>SingleChildScrollView(padding:const EdgeInsets.all(18),child:Column(crossAxisAlignment:CrossAxisAlignment.stretch,children:[
+  const SizedBox(height:8),const Text('আমার প্রথম পাঠশালা',textAlign:TextAlign.center,style:TextStyle(fontSize:27,fontWeight:FontWeight.w900,color:Color(0xff65421e))),
+  const Text('খেলতে খেলতে শিখি',textAlign:TextAlign.center,style:TextStyle(fontSize:16,color:Colors.brown)),
+  const SizedBox(height:22),_homeTile('বাংলা স্বরবর্ণ','১১টি অক্ষর','🔤',1,colors[0]),_homeTile('বাংলা ব্যঞ্জনবর্ণ','ব্যঞ্জনবর্ণের গ্রিড','📚',2,colors[1]),
+  _homeTile('English Alphabet','A থেকে Z','🔠',3,colors[2]),_homeTile('আরবি হরফ','আরবি বর্ণমালা','🌙',4,colors[3]),_homeTile('ছড়া, কবিতা ও গান','শুনে শুনে শিখি','🎵',5,colors[0]),
+  const SizedBox(height:12),const Text('শেখার জন্য যেকোনো কার্ডে চাপ দাও।',textAlign:TextAlign.center)
+ ]));
+ Widget _homeTile(String title,String sub,String emoji,int target,Color color)=>Card(color:color,elevation:0,child:ListTile(contentPadding:const EdgeInsets.all(12),leading:Text(emoji,style:const TextStyle(fontSize:34)),title:Text(title,style:const TextStyle(fontSize:20,fontWeight:FontWeight.bold)),subtitle:Text(sub),trailing:const Icon(Icons.arrow_forward_ios),onTap:()=>setState(()=>tab=target)));
+ Widget _alphabet(String title,List<Lesson> items)=>Column(children:[
+  Padding(padding:const EdgeInsets.fromLTRB(8,12,8,6),child:Row(children:[IconButton(onPressed:()=>setState(()=>tab=0),icon:const Icon(Icons.arrow_back)),Expanded(child:Text(title,textAlign:TextAlign.center,style:const TextStyle(fontSize:24,fontWeight:FontWeight.bold))),const SizedBox(width:48)])),
+  const Text('যেকোনো বাটনে চাপ দাও, অক্ষর ও শব্দ শোনো',style:TextStyle(color:Colors.brown)),
+  Expanded(child:GridView.builder(padding:const EdgeInsets.all(12),gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:3,mainAxisSpacing:10,crossAxisSpacing:10,childAspectRatio:.83),itemCount:items.length,itemBuilder:(context,i){
+   final x=items[i]; return Material(color:colors[i%4],borderRadius:BorderRadius.circular(18),child:InkWell(borderRadius:BorderRadius.circular(18),onTap:()=>play(x.audio),child:Padding(padding:const EdgeInsets.all(5),child:Column(mainAxisAlignment:MainAxisAlignment.center,children:[
+    Text(x.letter,style:const TextStyle(fontSize:36,fontWeight:FontWeight.w900,color:Color(0xff27231d))),
+    Text(x.emoji,style:const TextStyle(fontSize:32)),Text(x.word,maxLines:1,overflow:TextOverflow.ellipsis,style:const TextStyle(fontSize:13,fontWeight:FontWeight.w700)),
+    Icon(playing==x.audio?Icons.volume_up:Icons.touch_app,size:17,color:Colors.brown)
+   ]))));
+  }))
+ ]);
+ Widget _rhymes()=>ListView(padding:const EdgeInsets.all(16),children:[
+  const Text('ছড়া, কবিতা ও গান',style:TextStyle(fontSize:25,fontWeight:FontWeight.bold),textAlign:TextAlign.center),
+  const Text('পড়ি, শুনি, মুখস্থ করি',textAlign:TextAlign.center),
+  ...rhymes.map((r)=>Card(color:colors[rhymes.indexOf(r)%4],child:ExpansionTile(title:Text(r['title']!,style:const TextStyle(fontSize:19,fontWeight:FontWeight.bold)),subtitle:Text(r['type']!),children:[Padding(padding:const EdgeInsets.all(16),child:Text(r['text']!,style:const TextStyle(fontSize:20,height:1.8))),Padding(padding:const EdgeInsets.only(bottom:12),child:FilledButton.icon(onPressed:()=>play('rhymes/${rhymes.indexOf(r)+1}.mp3'),icon:const Icon(Icons.play_arrow),label:const Text('অডিও শুনি')))]))),
+  const Padding(padding:EdgeInsets.all(12),child:Text('নোট: এই সংস্করণে ছড়ার লেখা নমুনা হিসেবে আছে। প্রকাশের আগে ছড়ার স্বত্ব/অনুমতি যাচাই এবং মানুষের কণ্ঠে অডিও রেকর্ড যোগ করতে হবে।'))
+ ]);
+ Widget _about()=>const Center(child:Padding(padding:EdgeInsets.all(24),child:Column(mainAxisSize:MainAxisSize.min,children:[Text('আমার প্রথম পাঠশালা',style:TextStyle(fontSize:25,fontWeight:FontWeight.bold)),SizedBox(height:12),Text('উন্নয়নকারী: মো: মেহেদী হাসান'),Text('Version 1.1.0'),Text('শিশুদের শেখার আনন্দময় সঙ্গী')]))); 
 }
