@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 void main() => runApp(const PathshalaApp());
 
@@ -9,95 +9,116 @@ class PathshalaApp extends StatelessWidget {
   const PathshalaApp({super.key});
   @override
   Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'আমার প্রথম পাঠশালা',
-    theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF168B68)), useMaterial3: true),
-    home: const HomePage(),
-  );
+        title: 'আমার প্রথম পাঠশালা',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(useMaterial3: true, colorSchemeSeed: const Color(0xFF168A70), scaffoldBackgroundColor: const Color(0xFFFFFBF2)),
+        home: const HomePage(),
+      );
 }
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-  @override State<HomePage> createState() => _HomePageState();
+  @override
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final AudioPlayer player = AudioPlayer();
-  Map<String,dynamic>? data;
-  int tab = 0;
-  String? activeAudio;
-  @override void initState(){ super.initState(); _load(); }
-  Future<void> _load() async {
-    final raw = await rootBundle.loadString('assets/data/lessons.json');
-    if(mounted) setState(()=>data=jsonDecode(raw) as Map<String,dynamic>);
+  final AudioPlayer _player = AudioPlayer();
+  List<dynamic> _lessons = [];
+  List<dynamic> _rhymes = [];
+  int _tab = 0;
+  String _language = 'bn';
+  String _bnGroup = 'vowels';
+  String? _playingId;
+  bool _loading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+    _player.onPlayerComplete.listen((_) { if (mounted) setState(() => _playingId = null); });
   }
-  Future<void> play(String path) async {
+
+  Future<void> _loadData() async {
     try {
-      setState(()=>activeAudio=path);
-      await player.stop();
-      await player.play(AssetSource(path.replaceFirst('assets/','')));
-    } catch (_) {
-      if(mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('অডিও ফাইল পাওয়া যায়নি। GitHub Actions সফলভাবে সম্পন্ন হয়েছে কি না দেখুন।')));
+      final raw = await rootBundle.loadString('assets/data/lessons.json');
+      final decoded = jsonDecode(raw) as Map<String, dynamic>;
+      if (!mounted) return;
+      setState(() {
+        _lessons = decoded['lessons'] as List<dynamic>;
+        _rhymes = decoded['rhymes'] as List<dynamic>;
+        _loading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() { _loading = false; _error = 'পাঠের তথ্য লোড করা যায়নি: $e'; });
     }
   }
-  @override void dispose(){player.dispose();super.dispose();}
-  @override Widget build(BuildContext context) {
-    if(data==null) return const Scaffold(body: Center(child:CircularProgressIndicator()));
-    final titles=['বাংলা বর্ণমালা','English Alphabet','আরবি হরফ','ছড়া ও কবিতা','অভিভাবক'];
-    final all=(data!['lessons'] as List).cast<Map<String,dynamic>>();
-    final page=tab<3
-      ? AlphabetPage(title:titles[tab],lessons:all.where((x)=>x['language']==['bn','en','ar'][tab]).toList(),onTap:(x)=>play(x['audio'] as String),active:activeAudio)
-      : tab==3 ? RhymesPage(items:(data!['rhymes'] as List).cast<Map<String,dynamic>>(),onTap:(x)=>play(x['audio'] as String))
-      : const ParentPage();
+
+  Future<void> _play(String id, String language, String filename) async {
+    final path = language == 'rhyme' ? 'audio/rhymes/$filename' : 'audio/$language/$filename';
+    try {
+      await _player.stop();
+      if (mounted) setState(() => _playingId = id);
+      await _player.play(AssetSource(path));
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _playingId = null);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('অডিও চালানো যায়নি। APK-তে অডিও যুক্ত আছে কি না যাচাই করুন। ($e)')));
+    }
+  }
+
+  @override
+  void dispose() { _player.dispose(); super.dispose(); }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_loading) return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    if (_error != null) return Scaffold(body: Center(child: Padding(padding: const EdgeInsets.all(24), child: Text(_error!))));
     return Scaffold(
-      appBar:AppBar(title:const Text('আমার প্রথম পাঠশালা'),centerTitle:true),
-      body:Column(children:[
-        Container(width:double.infinity,margin:const EdgeInsets.all(12),padding:const EdgeInsets.all(16),
-          decoration:BoxDecoration(color:const Color(0xFFE4F5EC),borderRadius:BorderRadius.circular(18)),
-          child:const Column(children:[Text('চলো শিখি, খেলতে খেলতে!',style:TextStyle(fontSize:22,fontWeight:FontWeight.bold,color:Color(0xFF126B50))),SizedBox(height:4),Text('৩–৬ বছর বয়সী শিশুদের আনন্দময় পাঠশালা')]),
-        ),
-        Expanded(child:page),
-      ]),
-      bottomNavigationBar:NavigationBar(selectedIndex:tab,onDestinationSelected:(v)=>setState(()=>tab=v),destinations:const[
-        NavigationDestination(icon:Icon(Icons.abc),label:'বাংলা'),
-        NavigationDestination(icon:Icon(Icons.language),label:'English'),
-        NavigationDestination(icon:Icon(Icons.menu_book),label:'আরবি'),
-        NavigationDestination(icon:Icon(Icons.music_note),label:'ছড়া'),
-        NavigationDestination(icon:Icon(Icons.family_restroom),label:'অভিভাবক'),
+      appBar: AppBar(title: const Text('আমার প্রথম পাঠশালা', style: TextStyle(fontWeight: FontWeight.bold)), centerTitle: true, backgroundColor: const Color(0xFFFFE8A3)),
+      body: IndexedStack(index: _tab, children: [_learningPage(), _rhymePage(), _aboutPage()]),
+      bottomNavigationBar: NavigationBar(selectedIndex: _tab, onDestinationSelected: (v) => setState(() => _tab = v), destinations: const [
+        NavigationDestination(icon: Icon(Icons.menu_book_outlined), selectedIcon: Icon(Icons.menu_book), label: 'বর্ণ শিখি'),
+        NavigationDestination(icon: Icon(Icons.music_note_outlined), selectedIcon: Icon(Icons.music_note), label: 'ছড়া'),
+        NavigationDestination(icon: Icon(Icons.family_restroom), selectedIcon: Icon(Icons.family_restroom), label: 'অভিভাবক'),
       ]),
     );
   }
-}
 
-class AlphabetPage extends StatelessWidget {
-  final String title; final List<Map<String,dynamic>> lessons; final ValueChanged<Map<String,dynamic>> onTap; final String? active;
-  const AlphabetPage({super.key,required this.title,required this.lessons,required this.onTap,this.active});
-  @override Widget build(BuildContext context)=>Column(children:[
-    Padding(padding:const EdgeInsets.fromLTRB(16,4,16,10),child:Row(children:[Expanded(child:Text(title,style:const TextStyle(fontSize:20,fontWeight:FontWeight.bold))),const Text('ছুঁয়ে শোনো 🔊')])),
-    Expanded(child:GridView.builder(padding:const EdgeInsets.fromLTRB(12,0,12,16),gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:3,childAspectRatio:.92,crossAxisSpacing:10,mainAxisSpacing:10),itemCount:lessons.length,itemBuilder:(context,i){
-      final x=lessons[i]; final isActive=active==x['audio'];
-      return Material(color:isActive?const Color(0xFFD7F5E7):const Color(0xFFF1F8FF),borderRadius:BorderRadius.circular(16),child:InkWell(borderRadius:BorderRadius.circular(16),onTap:()=>onTap(x),child:Column(mainAxisAlignment:MainAxisAlignment.center,children:[
-        Text(x['symbol'],style:const TextStyle(fontSize:34,fontWeight:FontWeight.bold,color:Color(0xFF164B83))),
-        Text(x['emoji'],style:const TextStyle(fontSize:30)),
-        Padding(padding:const EdgeInsets.symmetric(horizontal:3),child:Text(x['word'],textAlign:TextAlign.center,maxLines:1,overflow:TextOverflow.ellipsis,style:const TextStyle(fontSize:13,fontWeight:FontWeight.w600))),
-        const Icon(Icons.volume_up_rounded,size:17,color:Color(0xFF168B68)),
-      ])));
-    })),
-  ]);
-}
+  Widget _learningPage() {
+    final list = _lessons.where((e) => e['language'] == _language).toList();
+    final filtered = _language == 'bn' ? list.where((e) => (_bnGroup == 'vowels') == (e['id'] as String).startsWith('bn_vowel')).toList() : list;
+    final title = _language == 'bn' ? 'বাংলা বর্ণমালা' : _language == 'en' ? 'English Alphabet' : 'আরবি হরফ';
+    return Column(children: [
+      Padding(padding: const EdgeInsets.fromLTRB(12, 12, 12, 4), child: SegmentedButton<String>(segments: const [
+        ButtonSegment(value: 'bn', label: Text('বাংলা')), ButtonSegment(value: 'en', label: Text('English')), ButtonSegment(value: 'ar', label: Text('আরবি')),
+      ], selected: {_language}, onSelectionChanged: (s) => setState(() { _language = s.first; _bnGroup = 'vowels'; }))),
+      if (_language == 'bn') Padding(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), child: SegmentedButton<String>(segments: const [
+        ButtonSegment(value: 'vowels', label: Text('স্বরবর্ণ (১১)')), ButtonSegment(value: 'consonants', label: Text('ব্যঞ্জনবর্ণ (৩৯)')),
+      ], selected: {_bnGroup}, onSelectionChanged: (s) => setState(() => _bnGroup = s.first))),
+      Padding(padding: const EdgeInsets.only(top: 4, bottom: 8), child: Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+      Expanded(child: GridView.builder(padding: const EdgeInsets.fromLTRB(12, 0, 12, 16), gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10, childAspectRatio: .92), itemCount: filtered.length, itemBuilder: (context, index) {
+        final item = filtered[index] as Map<String, dynamic>;
+        final active = _playingId == item['id'];
+        return InkWell(borderRadius: BorderRadius.circular(18), onTap: () => _play(item['id'], item['language'], item['audio']), child: Container(decoration: BoxDecoration(color: active ? const Color(0xFFB9E8D8) : Colors.white, borderRadius: BorderRadius.circular(18), border: Border.all(color: active ? const Color(0xFF168A70) : const Color(0xFFE8DCC5), width: active ? 2 : 1), boxShadow: const [BoxShadow(color: Color(0x11000000), blurRadius: 4, offset: Offset(0, 2))]), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(item['letter'], style: TextStyle(fontSize: _language == 'ar' ? 43 : 39, fontWeight: FontWeight.bold, color: const Color(0xFF244A43))),
+          const SizedBox(height: 5), Padding(padding: const EdgeInsets.symmetric(horizontal: 3), child: Text(item['word'], maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600))),
+          const SizedBox(height: 5), Icon(active ? Icons.volume_up : Icons.play_circle_fill, size: 22, color: const Color(0xFF168A70)),
+        ])));
+      })),
+    ]);
+  }
 
-class RhymesPage extends StatelessWidget {
-  final List<Map<String,dynamic>> items; final ValueChanged<Map<String,dynamic>> onTap;
-  const RhymesPage({super.key,required this.items,required this.onTap});
-  @override Widget build(BuildContext context)=>ListView(padding:const EdgeInsets.all(14),children:[
-    for(final x in items) Card(child:ListTile(leading:const CircleAvatar(child:Icon(Icons.music_note)),title:Text(x['title'],style:const TextStyle(fontWeight:FontWeight.bold)),subtitle:Text(x['text']),trailing:IconButton(icon:const Icon(Icons.play_circle_fill,color:Color(0xFF168B68),size:32),onPressed:()=>onTap(x)))),
-  ]);
-}
-class ParentPage extends StatelessWidget {
-  const ParentPage({super.key});
-  @override Widget build(BuildContext context)=>ListView(padding:const EdgeInsets.all(18),children:const[
-    Card(child:ListTile(leading:Icon(Icons.child_care),title:Text('শিশুর শেখার জায়গা'),subtitle:Text('বর্ণ, শব্দ, ছবি ও ছড়া ছুঁয়ে শেখার জন্য তৈরি।'))),
-    Card(child:ListTile(leading:Icon(Icons.offline_bolt),title:Text('অফলাইন ব্যবহার'),subtitle:Text('GitHub Actions অডিও তৈরি করে APK-তে যুক্ত করলে শেখার অডিও ইন্টারনেট ছাড়াই চলবে।'))),
-    Card(child:ListTile(leading:Icon(Icons.info_outline),title:Text('অ্যাপ সম্পর্কে'),subtitle:Text('আমার প্রথম পাঠশালা\nডেভেলপার: মো: মেহেদী হাসান\nসংস্করণ: 2.0.0'))),
+  Widget _rhymePage() => ListView(padding: const EdgeInsets.all(14), children: [const Text('মজার ছড়া', textAlign: TextAlign.center, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)), const SizedBox(height: 10), ..._rhymes.map((raw) {
+    final r = raw as Map<String, dynamic>; final active = _playingId == r['id'];
+    return Card(color: active ? const Color(0xFFDDF4E9) : Colors.white, child: ListTile(leading: const CircleAvatar(child: Icon(Icons.music_note)), title: Text(r['title'], style: const TextStyle(fontWeight: FontWeight.bold)), subtitle: Text(r['text']), trailing: IconButton(icon: Icon(active ? Icons.volume_up : Icons.play_arrow), onPressed: () => _play(r['id'], 'rhyme', r['audio']))));
+  })]);
+
+  Widget _aboutPage() => ListView(padding: const EdgeInsets.all(20), children: const [
+    Icon(Icons.child_care, size: 64, color: Color(0xFF168A70)), SizedBox(height: 12), Text('আমার প্রথম পাঠশালা', textAlign: TextAlign.center, style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
+    SizedBox(height: 12), Text('৩–৬ বছর বয়সী শিশুদের জন্য বাংলা, ইংরেজি ও আরবি বর্ণ শেখার আনন্দময় অ্যাপ। বর্ণ বা ছড়ার কার্ডে চাপ দিলে অডিও শোনা যাবে। অডিও অ্যাপের ভেতরে থাকলে ইন্টারনেট ছাড়াই চলবে।'),
+    SizedBox(height: 20), Text('ডেভেলপার: মো: মেহেদী হাসান', style: TextStyle(fontWeight: FontWeight.bold)), Text('সংস্করণ: 1.2.0'),
   ]);
 }
