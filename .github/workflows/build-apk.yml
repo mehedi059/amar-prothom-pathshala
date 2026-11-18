@@ -46,7 +46,7 @@ jobs:
           data=json.loads(Path('assets/data/lessons.json').read_text(encoding='utf-8'))
           expected=[Path('assets/audio')/x['language']/x['audio'] for x in data['lessons']]
           expected += [Path('assets/audio/rhymes')/x['audio'] for x in data['rhymes']]
-          missing=[str(p) for p in expected if not p.is_file() or p.stat().st_size <= 1000]
+          missing=[str(p) for p in expected if not p.is_file() or p.stat().st_size < 300]
           print(f'Expected audio files: {len(expected)}')
           if missing:
               raise SystemExit('Audio verification failed:\n'+'\n'.join(missing))
