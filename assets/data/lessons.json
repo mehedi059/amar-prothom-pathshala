@@ -1,1 +1,931 @@
-
+{
+  "lessons": [
+    {
+      "language": "bn",
+      "symbol": "অ",
+      "word": "অজগর",
+      "emoji": "🐍",
+      "voice": "male",
+      "speech": "অ। অজগর।",
+      "audio": "assets/audio/bn/01.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "আ",
+      "word": "আম",
+      "emoji": "🥭",
+      "voice": "female",
+      "speech": "আ। আম।",
+      "audio": "assets/audio/bn/02.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ই",
+      "word": "ইলিশ",
+      "emoji": "🐟",
+      "voice": "male",
+      "speech": "ই। ইলিশ।",
+      "audio": "assets/audio/bn/03.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঈ",
+      "word": "ঈগল",
+      "emoji": "🦅",
+      "voice": "female",
+      "speech": "ঈ। ঈগল।",
+      "audio": "assets/audio/bn/04.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "উ",
+      "word": "উট",
+      "emoji": "🐪",
+      "voice": "male",
+      "speech": "উ। উট।",
+      "audio": "assets/audio/bn/05.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঊ",
+      "word": "ঊষা",
+      "emoji": "🌅",
+      "voice": "female",
+      "speech": "ঊ। ঊষা।",
+      "audio": "assets/audio/bn/06.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঋ",
+      "word": "ঋতু",
+      "emoji": "🌦️",
+      "voice": "male",
+      "speech": "ঋ। ঋতু।",
+      "audio": "assets/audio/bn/07.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "এ",
+      "word": "একতারা",
+      "emoji": "🎸",
+      "voice": "female",
+      "speech": "এ। একতারা।",
+      "audio": "assets/audio/bn/08.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঐ",
+      "word": "ঐক্য",
+      "emoji": "🤝",
+      "voice": "male",
+      "speech": "ঐ। ঐক্য।",
+      "audio": "assets/audio/bn/09.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ও",
+      "word": "ওল",
+      "emoji": "🥔",
+      "voice": "female",
+      "speech": "ও। ওল।",
+      "audio": "assets/audio/bn/10.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঔ",
+      "word": "ঔষধ",
+      "emoji": "💊",
+      "voice": "male",
+      "speech": "ঔ। ঔষধ।",
+      "audio": "assets/audio/bn/11.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ক",
+      "word": "কলম",
+      "emoji": "🖊️",
+      "voice": "female",
+      "speech": "ক। কলম।",
+      "audio": "assets/audio/bn/12.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "খ",
+      "word": "খরগোশ",
+      "emoji": "🐇",
+      "voice": "male",
+      "speech": "খ। খরগোশ।",
+      "audio": "assets/audio/bn/13.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "গ",
+      "word": "গরু",
+      "emoji": "🐄",
+      "voice": "female",
+      "speech": "গ। গরু।",
+      "audio": "assets/audio/bn/14.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঘ",
+      "word": "ঘড়ি",
+      "emoji": "🕒",
+      "voice": "male",
+      "speech": "ঘ। ঘড়ি।",
+      "audio": "assets/audio/bn/15.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঙ",
+      "word": "ব্যাঙ",
+      "emoji": "🐸",
+      "voice": "female",
+      "speech": "ঙ। ব্যাঙ।",
+      "audio": "assets/audio/bn/16.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "চ",
+      "word": "চশমা",
+      "emoji": "👓",
+      "voice": "male",
+      "speech": "চ। চশমা।",
+      "audio": "assets/audio/bn/17.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ছ",
+      "word": "ছাতা",
+      "emoji": "☂️",
+      "voice": "female",
+      "speech": "ছ। ছাতা।",
+      "audio": "assets/audio/bn/18.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "জ",
+      "word": "জাহাজ",
+      "emoji": "🚢",
+      "voice": "male",
+      "speech": "জ। জাহাজ।",
+      "audio": "assets/audio/bn/19.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঝ",
+      "word": "ঝুড়ি",
+      "emoji": "🧺",
+      "voice": "female",
+      "speech": "ঝ। ঝুড়ি।",
+      "audio": "assets/audio/bn/20.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঞ",
+      "word": "মিঞাও",
+      "emoji": "🐱",
+      "voice": "male",
+      "speech": "ঞ। মিঞাও।",
+      "audio": "assets/audio/bn/21.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ট",
+      "word": "টমেটো",
+      "emoji": "🍅",
+      "voice": "female",
+      "speech": "ট। টমেটো।",
+      "audio": "assets/audio/bn/22.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঠ",
+      "word": "ঠেলাগাড়ি",
+      "emoji": "🛒",
+      "voice": "male",
+      "speech": "ঠ। ঠেলাগাড়ি।",
+      "audio": "assets/audio/bn/23.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ড",
+      "word": "ডালিম",
+      "emoji": "🍎",
+      "voice": "female",
+      "speech": "ড। ডালিম।",
+      "audio": "assets/audio/bn/24.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঢ",
+      "word": "ঢোল",
+      "emoji": "🥁",
+      "voice": "male",
+      "speech": "ঢ। ঢোল।",
+      "audio": "assets/audio/bn/25.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ণ",
+      "word": "হরিণ",
+      "emoji": "🦌",
+      "voice": "female",
+      "speech": "ণ। হরিণ।",
+      "audio": "assets/audio/bn/26.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ত",
+      "word": "তরমুজ",
+      "emoji": "🍉",
+      "voice": "male",
+      "speech": "ত। তরমুজ।",
+      "audio": "assets/audio/bn/27.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "থ",
+      "word": "থালা",
+      "emoji": "🍽️",
+      "voice": "female",
+      "speech": "থ। থালা।",
+      "audio": "assets/audio/bn/28.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "দ",
+      "word": "দোয়েল",
+      "emoji": "🐦",
+      "voice": "male",
+      "speech": "দ। দোয়েল।",
+      "audio": "assets/audio/bn/29.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ধ",
+      "word": "ধান",
+      "emoji": "🌾",
+      "voice": "female",
+      "speech": "ধ। ধান।",
+      "audio": "assets/audio/bn/30.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ন",
+      "word": "নৌকা",
+      "emoji": "🛶",
+      "voice": "male",
+      "speech": "ন। নৌকা।",
+      "audio": "assets/audio/bn/31.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "প",
+      "word": "পাখি",
+      "emoji": "🐦",
+      "voice": "female",
+      "speech": "প। পাখি।",
+      "audio": "assets/audio/bn/32.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ফ",
+      "word": "ফুল",
+      "emoji": "🌸",
+      "voice": "male",
+      "speech": "ফ। ফুল।",
+      "audio": "assets/audio/bn/33.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ব",
+      "word": "বই",
+      "emoji": "📚",
+      "voice": "female",
+      "speech": "ব। বই।",
+      "audio": "assets/audio/bn/34.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ভ",
+      "word": "ভালুক",
+      "emoji": "🐻",
+      "voice": "male",
+      "speech": "ভ। ভালুক।",
+      "audio": "assets/audio/bn/35.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ম",
+      "word": "মাছ",
+      "emoji": "🐠",
+      "voice": "female",
+      "speech": "ম। মাছ।",
+      "audio": "assets/audio/bn/36.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "য",
+      "word": "যমুনা",
+      "emoji": "🏞️",
+      "voice": "male",
+      "speech": "য। যমুনা।",
+      "audio": "assets/audio/bn/37.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "র",
+      "word": "রংধনু",
+      "emoji": "🌈",
+      "voice": "female",
+      "speech": "র। রংধনু।",
+      "audio": "assets/audio/bn/38.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ল",
+      "word": "লিচু",
+      "emoji": "🍒",
+      "voice": "male",
+      "speech": "ল। লিচু।",
+      "audio": "assets/audio/bn/39.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "শ",
+      "word": "শাপলা",
+      "emoji": "🪷",
+      "voice": "female",
+      "speech": "শ। শাপলা।",
+      "audio": "assets/audio/bn/40.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ষ",
+      "word": "ষাঁড়",
+      "emoji": "🐂",
+      "voice": "male",
+      "speech": "ষ। ষাঁড়।",
+      "audio": "assets/audio/bn/41.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "স",
+      "word": "সিংহ",
+      "emoji": "🦁",
+      "voice": "female",
+      "speech": "স। সিংহ।",
+      "audio": "assets/audio/bn/42.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "হ",
+      "word": "হাতি",
+      "emoji": "🐘",
+      "voice": "male",
+      "speech": "হ। হাতি।",
+      "audio": "assets/audio/bn/43.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ড়",
+      "word": "ঘুড়ি",
+      "emoji": "🪁",
+      "voice": "female",
+      "speech": "ড়। ঘুড়ি।",
+      "audio": "assets/audio/bn/44.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "ঢ়",
+      "word": "আষাঢ়",
+      "emoji": "🌧️",
+      "voice": "male",
+      "speech": "ঢ়। আষাঢ়।",
+      "audio": "assets/audio/bn/45.mp3"
+    },
+    {
+      "language": "bn",
+      "symbol": "য়",
+      "word": "ময়ূর",
+      "emoji": "🦚",
+      "voice": "female",
+      "speech": "য়। ময়ূর।",
+      "audio": "assets/audio/bn/46.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "A",
+      "word": "Apple",
+      "emoji": "🍎",
+      "voice": "male",
+      "speech": "A for Apple.",
+      "audio": "assets/audio/en/A.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "B",
+      "word": "Ball",
+      "emoji": "⚽",
+      "voice": "female",
+      "speech": "B for Ball.",
+      "audio": "assets/audio/en/B.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "C",
+      "word": "Cat",
+      "emoji": "🐱",
+      "voice": "male",
+      "speech": "C for Cat.",
+      "audio": "assets/audio/en/C.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "D",
+      "word": "Dog",
+      "emoji": "🐶",
+      "voice": "female",
+      "speech": "D for Dog.",
+      "audio": "assets/audio/en/D.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "E",
+      "word": "Elephant",
+      "emoji": "🐘",
+      "voice": "male",
+      "speech": "E for Elephant.",
+      "audio": "assets/audio/en/E.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "F",
+      "word": "Fish",
+      "emoji": "🐟",
+      "voice": "female",
+      "speech": "F for Fish.",
+      "audio": "assets/audio/en/F.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "G",
+      "word": "Goat",
+      "emoji": "🐐",
+      "voice": "male",
+      "speech": "G for Goat.",
+      "audio": "assets/audio/en/G.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "H",
+      "word": "Hen",
+      "emoji": "🐔",
+      "voice": "female",
+      "speech": "H for Hen.",
+      "audio": "assets/audio/en/H.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "I",
+      "word": "Ice cream",
+      "emoji": "🍦",
+      "voice": "male",
+      "speech": "I for Ice cream.",
+      "audio": "assets/audio/en/I.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "J",
+      "word": "Juice",
+      "emoji": "🧃",
+      "voice": "female",
+      "speech": "J for Juice.",
+      "audio": "assets/audio/en/J.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "K",
+      "word": "Kite",
+      "emoji": "🪁",
+      "voice": "male",
+      "speech": "K for Kite.",
+      "audio": "assets/audio/en/K.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "L",
+      "word": "Lion",
+      "emoji": "🦁",
+      "voice": "female",
+      "speech": "L for Lion.",
+      "audio": "assets/audio/en/L.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "M",
+      "word": "Mango",
+      "emoji": "🥭",
+      "voice": "male",
+      "speech": "M for Mango.",
+      "audio": "assets/audio/en/M.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "N",
+      "word": "Nest",
+      "emoji": "🪺",
+      "voice": "female",
+      "speech": "N for Nest.",
+      "audio": "assets/audio/en/N.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "O",
+      "word": "Orange",
+      "emoji": "🍊",
+      "voice": "male",
+      "speech": "O for Orange.",
+      "audio": "assets/audio/en/O.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "P",
+      "word": "Parrot",
+      "emoji": "🦜",
+      "voice": "female",
+      "speech": "P for Parrot.",
+      "audio": "assets/audio/en/P.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "Q",
+      "word": "Queen",
+      "emoji": "👑",
+      "voice": "male",
+      "speech": "Q for Queen.",
+      "audio": "assets/audio/en/Q.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "R",
+      "word": "Rabbit",
+      "emoji": "🐇",
+      "voice": "female",
+      "speech": "R for Rabbit.",
+      "audio": "assets/audio/en/R.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "S",
+      "word": "Sun",
+      "emoji": "☀️",
+      "voice": "male",
+      "speech": "S for Sun.",
+      "audio": "assets/audio/en/S.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "T",
+      "word": "Tiger",
+      "emoji": "🐅",
+      "voice": "female",
+      "speech": "T for Tiger.",
+      "audio": "assets/audio/en/T.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "U",
+      "word": "Umbrella",
+      "emoji": "☂️",
+      "voice": "male",
+      "speech": "U for Umbrella.",
+      "audio": "assets/audio/en/U.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "V",
+      "word": "Van",
+      "emoji": "🚐",
+      "voice": "female",
+      "speech": "V for Van.",
+      "audio": "assets/audio/en/V.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "W",
+      "word": "Watch",
+      "emoji": "⌚",
+      "voice": "male",
+      "speech": "W for Watch.",
+      "audio": "assets/audio/en/W.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "X",
+      "word": "Xylophone",
+      "emoji": "🎼",
+      "voice": "female",
+      "speech": "X for Xylophone.",
+      "audio": "assets/audio/en/X.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "Y",
+      "word": "Yak",
+      "emoji": "🐂",
+      "voice": "male",
+      "speech": "Y for Yak.",
+      "audio": "assets/audio/en/Y.mp3"
+    },
+    {
+      "language": "en",
+      "symbol": "Z",
+      "word": "Zebra",
+      "emoji": "🦓",
+      "voice": "female",
+      "speech": "Z for Zebra.",
+      "audio": "assets/audio/en/Z.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ا",
+      "word": "أَسَد",
+      "emoji": "🦁",
+      "voice": "male",
+      "speech": "ا، أَسَد.",
+      "audio": "assets/audio/ar/01.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ب",
+      "word": "بَطَّة",
+      "emoji": "🦆",
+      "voice": "female",
+      "speech": "ب، بَطَّة.",
+      "audio": "assets/audio/ar/02.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ت",
+      "word": "تُفَّاح",
+      "emoji": "🍎",
+      "voice": "male",
+      "speech": "ت، تُفَّاح.",
+      "audio": "assets/audio/ar/03.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ث",
+      "word": "ثَعْلَب",
+      "emoji": "🦊",
+      "voice": "female",
+      "speech": "ث، ثَعْلَب.",
+      "audio": "assets/audio/ar/04.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ج",
+      "word": "جَمَل",
+      "emoji": "🐪",
+      "voice": "male",
+      "speech": "ج، جَمَل.",
+      "audio": "assets/audio/ar/05.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ح",
+      "word": "حِصَان",
+      "emoji": "🐎",
+      "voice": "female",
+      "speech": "ح، حِصَان.",
+      "audio": "assets/audio/ar/06.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "خ",
+      "word": "خُبْز",
+      "emoji": "🍞",
+      "voice": "male",
+      "speech": "خ، خُبْز.",
+      "audio": "assets/audio/ar/07.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "د",
+      "word": "دُبّ",
+      "emoji": "🐻",
+      "voice": "female",
+      "speech": "د، دُبّ.",
+      "audio": "assets/audio/ar/08.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ذ",
+      "word": "ذُرَّة",
+      "emoji": "🌽",
+      "voice": "male",
+      "speech": "ذ، ذُرَّة.",
+      "audio": "assets/audio/ar/09.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ر",
+      "word": "رُمَّان",
+      "emoji": "🍎",
+      "voice": "female",
+      "speech": "ر، رُمَّان.",
+      "audio": "assets/audio/ar/10.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ز",
+      "word": "زَرَافَة",
+      "emoji": "🦒",
+      "voice": "male",
+      "speech": "ز، زَرَافَة.",
+      "audio": "assets/audio/ar/11.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "س",
+      "word": "سَمَكَة",
+      "emoji": "🐟",
+      "voice": "female",
+      "speech": "س، سَمَكَة.",
+      "audio": "assets/audio/ar/12.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ش",
+      "word": "شَمْس",
+      "emoji": "☀️",
+      "voice": "male",
+      "speech": "ش، شَمْس.",
+      "audio": "assets/audio/ar/13.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ص",
+      "word": "صَقْر",
+      "emoji": "🦅",
+      "voice": "female",
+      "speech": "ص، صَقْر.",
+      "audio": "assets/audio/ar/14.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ض",
+      "word": "ضِفْدَع",
+      "emoji": "🐸",
+      "voice": "male",
+      "speech": "ض، ضِفْدَع.",
+      "audio": "assets/audio/ar/15.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ط",
+      "word": "طَائِر",
+      "emoji": "🐦",
+      "voice": "female",
+      "speech": "ط، طَائِر.",
+      "audio": "assets/audio/ar/16.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ظ",
+      "word": "ظَرْف",
+      "emoji": "✉️",
+      "voice": "male",
+      "speech": "ظ، ظَرْف.",
+      "audio": "assets/audio/ar/17.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ع",
+      "word": "عِنَب",
+      "emoji": "🍇",
+      "voice": "female",
+      "speech": "ع، عِنَب.",
+      "audio": "assets/audio/ar/18.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "غ",
+      "word": "غُرَاب",
+      "emoji": "🐦‍⬛",
+      "voice": "male",
+      "speech": "غ، غُرَاب.",
+      "audio": "assets/audio/ar/19.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ف",
+      "word": "فِيل",
+      "emoji": "🐘",
+      "voice": "female",
+      "speech": "ف، فِيل.",
+      "audio": "assets/audio/ar/20.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ق",
+      "word": "قَمَر",
+      "emoji": "🌙",
+      "voice": "male",
+      "speech": "ق، قَمَر.",
+      "audio": "assets/audio/ar/21.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ك",
+      "word": "كِتَاب",
+      "emoji": "📘",
+      "voice": "female",
+      "speech": "ك، كِتَاب.",
+      "audio": "assets/audio/ar/22.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ل",
+      "word": "لَيْمُون",
+      "emoji": "🍋",
+      "voice": "male",
+      "speech": "ل، لَيْمُون.",
+      "audio": "assets/audio/ar/23.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "م",
+      "word": "مَوْز",
+      "emoji": "🍌",
+      "voice": "female",
+      "speech": "م، مَوْز.",
+      "audio": "assets/audio/ar/24.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ن",
+      "word": "نَجْم",
+      "emoji": "⭐",
+      "voice": "male",
+      "speech": "ن، نَجْم.",
+      "audio": "assets/audio/ar/25.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ه",
+      "word": "هِلال",
+      "emoji": "🌙",
+      "voice": "female",
+      "speech": "ه، هِلال.",
+      "audio": "assets/audio/ar/26.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "و",
+      "word": "وَرْدَة",
+      "emoji": "🌹",
+      "voice": "male",
+      "speech": "و، وَرْدَة.",
+      "audio": "assets/audio/ar/27.mp3"
+    },
+    {
+      "language": "ar",
+      "symbol": "ي",
+      "word": "يَد",
+      "emoji": "✋",
+      "voice": "female",
+      "speech": "ي، يَد.",
+      "audio": "assets/audio/ar/28.mp3"
+    }
+  ],
+  "rhymes": [
+    {
+      "title": "ছোট্ট পাখি",
+      "text": "ছোট্ট পাখি ডাকে, ভোরের আলো ফাঁকে।\nডানা মেলে উড়ে যায়, নীল আকাশের বাঁকে।",
+      "audio": "assets/audio/rhymes/01.mp3"
+    },
+    {
+      "title": "রঙিন ঘুড়ি",
+      "text": "রঙিন ঘুড়ি উড়ে, মেঘের দেশে ঘুরে।\nহাসি খুশি ছোট্ট মন, খেলি সবাই মিলে।",
+      "audio": "assets/audio/rhymes/02.mp3"
+    },
+    {
+      "title": "আমার বই",
+      "text": "আমার ছোট্ট বই, কত ছবি কই।\nপড়ি শিখি প্রতিদিন, আনন্দেরই সই।",
+      "audio": "assets/audio/rhymes/03.mp3"
+    },
+    {
+      "title": "বৃষ্টি",
+      "text": "টাপুর টুপুর বৃষ্টি পড়ে, পাতার উপর জল।\nছোট্ট নদী গান গেয়ে যায়, দোলে শাপলা দল।",
+      "audio": "assets/audio/rhymes/04.mp3"
+    },
+    {
+      "title": "সকালের সূর্য",
+      "text": "সকালের সূর্য হাসে, সোনার আলো ঘাসে।\nপড়তে বসি খুশির মনে, নতুন দিনের আশে।",
+      "audio": "assets/audio/rhymes/05.mp3"
+    }
+  ]
+}
