@@ -1,7 +1,7 @@
 name: amar_prothom_pathshala
-description: Offline-first Bangla learning app for children aged 3-6.
+description: Offline-first Bengali learning app for children.
 publish_to: 'none'
-version: 2.0.0+4
+version: 1.2.0+3
 
 environment:
   sdk: '>=3.3.0 <4.0.0'

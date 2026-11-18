@@ -1,0 +1,9 @@
+This project intentionally generates MP3 files in GitHub Actions before Flutter builds.
+Expected MP3 count: 109
+- Bengali: 50 (11 vowels + 39 consonant/sign entries)
+- English: 26
+- Arabic: 28
+- Rhymes: 5
+
+The workflow publishes the APK artifact ONLY after scripts/verify_audio.py confirms every expected MP3 is present inside the APK archive.
+If generation or verification fails, no APK artifact is uploaded. Open the failed step log to identify the exact error.
